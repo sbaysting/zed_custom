@@ -1,0 +1,1 @@
+/home/samuel/zed_custom/Auto Picture Taker/build/CMakeFiles/ZED_Auto_Picture_Taker.dir
