@@ -1,0 +1,26 @@
+
+// Standard Libraries
+#include <iostream>
+
+// PCL Libraries
+#include <pcl/io/io.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/visualization/cloud_viewer.h>
+
+int main(int argc, char** argv){
+
+	// Define a point cloud pointer
+	pcl::PointCloud<pcl::PointXYZRGBA>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZRGBA>);
+	// Load PCD point cloud file
+    pcl::io::loadPCDFile ("PC_221.pcd", *cloud);
+	// Define a cloud viewer
+	pcl::visualization::CloudViewer viewer("Simple Cloud Viewer");
+	// Show point cloud
+	viewer.showCloud(cloud);
+
+	// Loop to do things while the point cloud viewer is still on
+	while (!viewer.wasStopped())
+	{
+	}	
+
+}
