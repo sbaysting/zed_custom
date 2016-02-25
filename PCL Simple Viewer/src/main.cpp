@@ -1,6 +1,7 @@
 
 // Standard Libraries
 #include <iostream>
+#include <string>
 
 // PCL Libraries
 #include <pcl/io/io.h>
@@ -9,10 +10,15 @@
 
 int main(int argc, char** argv){
 
+	// Get filename
+	std::string file;
+	std::cout << "Filename to display: ";
+	std::cin >> file;
+
 	// Define a point cloud pointer
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZRGB>);
 	// Load PCD point cloud file
-    pcl::io::loadPCDFile ("PC_221.pcd", *cloud);
+    pcl::io::loadPCDFile (file, *cloud);
 	// Define a cloud viewer
 	pcl::visualization::CloudViewer viewer("Simple Cloud Viewer");
 	// Show point cloud

@@ -9,6 +9,8 @@
 /home/samuel/zed_custom/PCL Simple Viewer/src/main.cpp
 iostream
 -
+string
+-
 pcl/io/io.h
 -
 pcl/io/pcd_io.h
