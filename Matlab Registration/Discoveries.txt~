@@ -1,8 +1,0 @@
-VGA quality files: ~12-13MB
-720p quality files: ~42MB
-
-ZED camera hooked up from long USB3.0 cable, says frames are corrupted and won't record
-
-VGA quality clouds, starts not recognizing points up close, unlike 720p quality (could be lighting in my room)
-
-With compression, it can compress the large PCD files (39MB each) by 60%. Final zip file size 31MB with two 39MB files in it

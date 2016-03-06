@@ -1,19 +1,26 @@
+clear
+clc
+
+% Number of clouds in folder
+clouds = 12;
+
 % Load PCD files and put them into XYZ format
 
-pc1full = readPcd('sakib1.pcd');
-pc1 = [pc1full(:,1),pc1full(:,2),pc1full(:,3)];
-pc1color = pc1full(:,4);
-pc1color = unpackRGBFloat(single(pc1color));
-pc2full = readPcd('sakib2.pcd');
-pc2 = [pc2full(:,1),pc2full(:,2),pc2full(:,3)];
-pc2color = pc2full(:,4);
-pc2color = unpackRGBFloat(single(pc2color));
-clear pc1full
-clear pc2full
+pcData = {};
+pcColorData = {};
+for i = 1:clouds
+    string = strcat('360/',num2str(i),'.pcd');
+    pcTmp = readPcd(string);
+    pc = [pcTmp(:,1),pcTmp(:,2),pcTmp(:,3)];
+    pcColor = pcTmp(:,4);
+    pcColor = unpackRGBFloat(single(pcColor));
+    pcData{i} = pc;
+    pcColorData{i} = pcColor;
+end
 
 % Convert to point cloud
-pc1 = pointCloud(pc1,'Color',pc1color);
-pc2 = pointCloud(pc2,'Color',pc2color);
+pc1 = pointCloud(pcData{1},'Color',pcColorData{1});
+pc2 = pointCloud(pcData{2},'Color',pcColorData{2});
 
 % Downsample with a box grid filter and set the size of grid filter to 
 % be 10cm. The grid filter divides the point cloud space into cubes. 
@@ -35,30 +42,48 @@ ptCloudAligned = pctransform(pc2,tform);
 mergeSize = 0.015;
 ptCloudScene = pcmerge(pc1, ptCloudAligned, mergeSize);
 
-% Visualize the input images.
-figure
-subplot(2,2,1)
-pcshow(pc1, 'VerticalAxis','Y', 'VerticalAxisDir', 'Down')
-title('Initial world scene')
-xlabel('X (m)')
-ylabel('Y (m)')
-zlabel('Z (m)')
-title('First input image')
-drawnow
+% Store the transformation object that accumulates the transformation.
+accumTform = tform;
 
-subplot(2,2,3)
-pcshow(pc2, 'VerticalAxis','Y', 'VerticalAxisDir', 'Down')
-xlabel('X (m)')
-ylabel('Y (m)')
-zlabel('Z (m)')
-title('Second input image')
-drawnow
+figure
+hAxes = pcshow(ptCloudScene, 'VerticalAxis','Y', 'VerticalAxisDir', 'Down');
+title('Updated world scene')
+% Set the axes property for faster rendering
+hAxes.CameraViewAngleMode = 'auto';
+hScatter = hAxes.Children;
+
+for i = 3:clouds
+    ptCloudCurrent = pointCloud(pcData{i},'Color',pcColorData{i});
+
+    % Use previous moving point cloud as reference.
+    fixed = moving;
+    moving = pcdownsample(ptCloudCurrent, 'gridAverage', gridSize);
+
+    % Apply ICP registration.
+    tform = pcregrigid(moving, fixed, 'Metric','pointToPlane','Extrapolate', true);
+
+    % Transform the current point cloud to the reference coordinate system
+    % defined by the first point cloud.
+    accumTform = affine3d(tform.T * accumTform.T);
+    ptCloudAligned = pctransform(ptCloudCurrent, accumTform);
+
+    % Update the world scene.
+    ptCloudScene = pcmerge(ptCloudScene, ptCloudAligned, mergeSize);
+    
+end
+
+ptCloudFiltered = pcdenoise(ptCloudScene);
 
 % Visualize the world scene.
-subplot(2,2,[2,4])
-pcshow(ptCloudScene, 'VerticalAxis','Y', 'VerticalAxisDir', 'Down')
-title('Initial world scene')
+    hScatter.XData = ptCloudFiltered.Location(:,1);
+    hScatter.YData = ptCloudFiltered.Location(:,2);
+    hScatter.ZData = ptCloudFiltered.Location(:,3);
+    hScatter.CData = ptCloudFiltered.Color;
+    drawnow('limitrate')
+    
+pcshow(ptCloudFiltered, 'VerticalAxis','Y', 'VerticalAxisDir', 'Down', ...
+        'Parent', hAxes)
+title('Updated world scene')
 xlabel('X (m)')
 ylabel('Y (m)')
 zlabel('Z (m)')
-drawnow
