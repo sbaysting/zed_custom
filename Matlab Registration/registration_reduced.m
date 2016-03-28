@@ -21,6 +21,22 @@ for i = 1:clouds
     pcColorData{i} = pcColor;
 end
 
+k = 1;
+pcDataTmp = {};
+pcColorDataTmp = {};
+for i = 1:clouds
+    if mod(i,3) ~= 0
+        pcDataTmp{k} = pcData{i};
+        pcColorDataTmp{k} = pcColorData{i};
+        k = k + 1;
+    end
+end
+
+pcData = pcDataTmp;
+pcColorData = pcColorDataTmp;
+clear pcDataTmp;
+clear pcColorDataTmp;
+
 % Convert to point cloud
 pc1 = pointCloud(pcData{1},'Color',pcColorData{1});
 pc2 = pointCloud(pcData{2},'Color',pcColorData{2});
@@ -61,7 +77,7 @@ title('Updated world scene')
 hAxes.CameraViewAngleMode = 'auto';
 hScatter = hAxes.Children;
 
-for i = 3:clouds
+for i = 3:(k-1)
     ptCloudCurrent = pointCloud(pcData{i},'Color',pcColorData{i});
     
     % De-noise the point cloud
