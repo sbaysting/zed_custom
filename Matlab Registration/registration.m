@@ -1,15 +1,18 @@
 clear
 clc
 
+tic;
+
 % Number of clouds in folder
 clouds = 12;
+folder = '360vga/';
 
 % Load PCD files and put them into XYZ format
 
 pcData = {};
 pcColorData = {};
 for i = 1:clouds
-    string = strcat('360/',num2str(i),'.pcd');
+    string = strcat(folder,num2str(i),'.pcd');
     pcTmp = readPcd(string);
     pc = [pcTmp(:,1),pcTmp(:,2),pcTmp(:,3)];
     pcColor = pcTmp(:,4);
@@ -22,12 +25,18 @@ end
 pc1 = pointCloud(pcData{1},'Color',pcColorData{1});
 pc2 = pointCloud(pcData{2},'Color',pcColorData{2});
 
+% De-noise the point cloud
+pc1 = pcdenoise(pc1);
+pc2 = pcdenoise(pc2);
+
 % Downsample with a box grid filter and set the size of grid filter to 
 % be 10cm. The grid filter divides the point cloud space into cubes. 
 % Points within each cube are combined into a single output point by 
 % averaging their X,Y,Z coordinates
 
-gridSize = 0.1;
+gridSize = 0.5;
+%fixed = pc1;
+%moving = pc2;
 fixed = pcdownsample(pc1, 'gridAverage', gridSize);
 moving = pcdownsample(pc2, 'gridAverage', gridSize);
 
@@ -54,10 +63,14 @@ hScatter = hAxes.Children;
 
 for i = 3:clouds
     ptCloudCurrent = pointCloud(pcData{i},'Color',pcColorData{i});
+    
+    % De-noise the point cloud
+    ptCloudCurrent = pcdenoise(ptCloudCurrent);
 
     % Use previous moving point cloud as reference.
     fixed = moving;
     moving = pcdownsample(ptCloudCurrent, 'gridAverage', gridSize);
+    %moving = ptCloudCurrent;
 
     % Apply ICP registration.
     tform = pcregrigid(moving, fixed, 'Metric','pointToPlane','Extrapolate', true);
@@ -73,6 +86,8 @@ for i = 3:clouds
 end
 
 ptCloudFiltered = pcdenoise(ptCloudScene);
+
+toc;
 
 % Visualize the world scene.
     hScatter.XData = ptCloudFiltered.Location(:,1);
