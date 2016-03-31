@@ -141,12 +141,60 @@ CMakeFiles/registration.dir/io.o.provides: CMakeFiles/registration.dir/io.o.requ
 
 CMakeFiles/registration.dir/io.o.provides.build: CMakeFiles/registration.dir/io.o
 
+CMakeFiles/registration.dir/icp.o: CMakeFiles/registration.dir/flags.make
+CMakeFiles/registration.dir/icp.o: icp.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/samuel/zed_custom/Registration/src/CMakeFiles $(CMAKE_PROGRESS_5)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/registration.dir/icp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/registration.dir/icp.o -c /home/samuel/zed_custom/Registration/src/icp.cpp
+
+CMakeFiles/registration.dir/icp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/registration.dir/icp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/samuel/zed_custom/Registration/src/icp.cpp > CMakeFiles/registration.dir/icp.i
+
+CMakeFiles/registration.dir/icp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/registration.dir/icp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/samuel/zed_custom/Registration/src/icp.cpp -o CMakeFiles/registration.dir/icp.s
+
+CMakeFiles/registration.dir/icp.o.requires:
+.PHONY : CMakeFiles/registration.dir/icp.o.requires
+
+CMakeFiles/registration.dir/icp.o.provides: CMakeFiles/registration.dir/icp.o.requires
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/icp.o.provides.build
+.PHONY : CMakeFiles/registration.dir/icp.o.provides
+
+CMakeFiles/registration.dir/icp.o.provides.build: CMakeFiles/registration.dir/icp.o
+
+CMakeFiles/registration.dir/cloud_viewer.o: CMakeFiles/registration.dir/flags.make
+CMakeFiles/registration.dir/cloud_viewer.o: cloud_viewer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/samuel/zed_custom/Registration/src/CMakeFiles $(CMAKE_PROGRESS_6)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/registration.dir/cloud_viewer.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/registration.dir/cloud_viewer.o -c /home/samuel/zed_custom/Registration/src/cloud_viewer.cpp
+
+CMakeFiles/registration.dir/cloud_viewer.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/registration.dir/cloud_viewer.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/samuel/zed_custom/Registration/src/cloud_viewer.cpp > CMakeFiles/registration.dir/cloud_viewer.i
+
+CMakeFiles/registration.dir/cloud_viewer.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/registration.dir/cloud_viewer.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/samuel/zed_custom/Registration/src/cloud_viewer.cpp -o CMakeFiles/registration.dir/cloud_viewer.s
+
+CMakeFiles/registration.dir/cloud_viewer.o.requires:
+.PHONY : CMakeFiles/registration.dir/cloud_viewer.o.requires
+
+CMakeFiles/registration.dir/cloud_viewer.o.provides: CMakeFiles/registration.dir/cloud_viewer.o.requires
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/cloud_viewer.o.provides.build
+.PHONY : CMakeFiles/registration.dir/cloud_viewer.o.provides
+
+CMakeFiles/registration.dir/cloud_viewer.o.provides.build: CMakeFiles/registration.dir/cloud_viewer.o
+
 # Object files for target registration
 registration_OBJECTS = \
 "CMakeFiles/registration.dir/main.o" \
 "CMakeFiles/registration.dir/voxelgrid_filter.o" \
 "CMakeFiles/registration.dir/outlier_filter.o" \
-"CMakeFiles/registration.dir/io.o"
+"CMakeFiles/registration.dir/io.o" \
+"CMakeFiles/registration.dir/icp.o" \
+"CMakeFiles/registration.dir/cloud_viewer.o"
 
 # External object files for target registration
 registration_EXTERNAL_OBJECTS =
@@ -155,6 +203,8 @@ registration: CMakeFiles/registration.dir/main.o
 registration: CMakeFiles/registration.dir/voxelgrid_filter.o
 registration: CMakeFiles/registration.dir/outlier_filter.o
 registration: CMakeFiles/registration.dir/io.o
+registration: CMakeFiles/registration.dir/icp.o
+registration: CMakeFiles/registration.dir/cloud_viewer.o
 registration: CMakeFiles/registration.dir/build.make
 registration: /usr/lib/x86_64-linux-gnu/libboost_system.so
 registration: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
@@ -271,6 +321,8 @@ CMakeFiles/registration.dir/requires: CMakeFiles/registration.dir/main.o.require
 CMakeFiles/registration.dir/requires: CMakeFiles/registration.dir/voxelgrid_filter.o.requires
 CMakeFiles/registration.dir/requires: CMakeFiles/registration.dir/outlier_filter.o.requires
 CMakeFiles/registration.dir/requires: CMakeFiles/registration.dir/io.o.requires
+CMakeFiles/registration.dir/requires: CMakeFiles/registration.dir/icp.o.requires
+CMakeFiles/registration.dir/requires: CMakeFiles/registration.dir/cloud_viewer.o.requires
 .PHONY : CMakeFiles/registration.dir/requires
 
 CMakeFiles/registration.dir/clean:

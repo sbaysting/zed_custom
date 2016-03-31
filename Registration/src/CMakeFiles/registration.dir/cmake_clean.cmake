@@ -3,6 +3,8 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/registration.dir/voxelgrid_filter.o"
   "CMakeFiles/registration.dir/outlier_filter.o"
   "CMakeFiles/registration.dir/io.o"
+  "CMakeFiles/registration.dir/icp.o"
+  "CMakeFiles/registration.dir/cloud_viewer.o"
   "registration.pdb"
   "registration"
 )

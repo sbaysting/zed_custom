@@ -112,6 +112,36 @@ registration/fast:
 .PHONY : registration/fast
 
 # target to build an object file
+cloud_viewer.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/cloud_viewer.o
+.PHONY : cloud_viewer.o
+
+# target to preprocess a source file
+cloud_viewer.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/cloud_viewer.i
+.PHONY : cloud_viewer.i
+
+# target to generate assembly for a file
+cloud_viewer.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/cloud_viewer.s
+.PHONY : cloud_viewer.s
+
+# target to build an object file
+icp.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/icp.o
+.PHONY : icp.o
+
+# target to preprocess a source file
+icp.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/icp.i
+.PHONY : icp.i
+
+# target to generate assembly for a file
+icp.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/icp.s
+.PHONY : icp.s
+
+# target to build an object file
 io.o:
 	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/io.o
 .PHONY : io.o
@@ -180,6 +210,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... registration"
+	@echo "... cloud_viewer.o"
+	@echo "... cloud_viewer.i"
+	@echo "... cloud_viewer.s"
+	@echo "... icp.o"
+	@echo "... icp.i"
+	@echo "... icp.s"
 	@echo "... io.o"
 	@echo "... io.i"
 	@echo "... io.s"

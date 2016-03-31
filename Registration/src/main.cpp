@@ -6,50 +6,66 @@
 #include "voxelgrid_filter.hpp"
 #include "outlier_filter.hpp"
 #include "io.hpp"
+#include "icp.hpp"
+#include "cloud_viewer.hpp"
 
-int
-main (int argc, char** argv)
-{
-  pcl::PCLPointCloud2::Ptr cloud (new pcl::PCLPointCloud2 ());
-  pcl::PCLPointCloud2::Ptr cloud_filtered (new pcl::PCLPointCloud2 ());
-  std::ostringstream input_filename;
-  std::ostringstream output_filename;
+int main (int argc, char** argv){
 
-  // Parameters
+	// Parameters
 
-  std::string input_folder = "points/";
-  std::string output_folder = "downsampled_points/";
+	std::string input_folder = "points/";
+	std::string output_folder = "downsampled_points/";
 
-  int clouds = 12;
+	int clouds = 12;
 
-  // Loop over the clouds and filter them
+	// Define point clouds
 
-  for(int i = 1; i <= clouds; i++){
+	pcl::PCLPointCloud2::Ptr cloud (new pcl::PCLPointCloud2 ());
+	pcl::PCLPointCloud2::Ptr cloud_filtered (new pcl::PCLPointCloud2 ());
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr final_cloud (new pcl::PointCloud<pcl::PointXYZRGB>);
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp (new pcl::PointCloud<pcl::PointXYZRGB>);
+	std::ostringstream input_filename;
+	std::ostringstream output_filename;
 
-	  // Set filename
-	  input_filename << input_folder << i << ".pcd";
-	  
-	  // Read the point cloud in PointCloud2 format
-	  cloud = readPointCloud2(input_filename.str());
+	// Loop over the clouds and filter them
 
-	  // Filter using VoxelGrid
-	  cloud_filtered = voxelgrid_filter(cloud);
+	for(int i = 1; i <= clouds; i++){
 
-	  // Filter outliers
-	  cloud_filtered = outlier_filter(cloud_filtered);
+		// Set filename
+		input_filename << input_folder << i << ".pcd";
 
-	  // Write new PCD file
-	  output_filename << output_folder << i << ".pcd";
-	  writePointCloud2(output_filename.str(), cloud_filtered);
+		// Read the point cloud in PointCloud2 format
+		cloud = readPointCloud2(input_filename.str());
 
-	  input_filename.str("");
-	  input_filename.clear();
-	  output_filename.str("");
-	  output_filename.clear();
+		// Filter using VoxelGrid
+		cloud_filtered = voxelgrid_filter(cloud);
 
-	  std::cout << std::endl;
+		// Filter outliers
+		cloud_filtered = outlier_filter(cloud_filtered);
 
-  } // End for loop
+		// If its the first iteration, this is going to be the base cloud. Set it as such
+		if(i == 1){
+			final_cloud = convertToXYZRGB(cloud_filtered);
+		} else { // If not the first iteration, run ICP on the base cloud and the input cloud
+			temp = convertToXYZRGB(cloud_filtered);
+			final_cloud = stitchWithICP(temp, final_cloud);
+		}
 
-  return (0);
+		/*// Write new PCD file
+		output_filename << output_folder << i << ".pcd";
+		writePointCloud2(output_filename.str(), cloud_filtered);
+		*/
+
+		input_filename.str("");
+		input_filename.clear();
+		output_filename.str("");
+		output_filename.clear();
+
+		std::cout << std::endl;
+
+	} // End for loop
+
+	displayPointCloud(final_cloud);
+
+	return (0);
 }
