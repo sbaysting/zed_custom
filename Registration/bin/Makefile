@@ -112,6 +112,51 @@ registration/fast:
 .PHONY : registration/fast
 
 # target to build an object file
+src/cloud_viewer.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/cloud_viewer.o
+.PHONY : src/cloud_viewer.o
+
+# target to preprocess a source file
+src/cloud_viewer.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/cloud_viewer.i
+.PHONY : src/cloud_viewer.i
+
+# target to generate assembly for a file
+src/cloud_viewer.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/cloud_viewer.s
+.PHONY : src/cloud_viewer.s
+
+# target to build an object file
+src/icp.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/icp.o
+.PHONY : src/icp.o
+
+# target to preprocess a source file
+src/icp.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/icp.i
+.PHONY : src/icp.i
+
+# target to generate assembly for a file
+src/icp.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/icp.s
+.PHONY : src/icp.s
+
+# target to build an object file
+src/io.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/io.o
+.PHONY : src/io.o
+
+# target to preprocess a source file
+src/io.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/io.i
+.PHONY : src/io.i
+
+# target to generate assembly for a file
+src/io.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/io.s
+.PHONY : src/io.s
+
+# target to build an object file
 src/main.o:
 	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/main.o
 .PHONY : src/main.o
@@ -126,6 +171,36 @@ src/main.s:
 	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/main.s
 .PHONY : src/main.s
 
+# target to build an object file
+src/outlier_filter.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/outlier_filter.o
+.PHONY : src/outlier_filter.o
+
+# target to preprocess a source file
+src/outlier_filter.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/outlier_filter.i
+.PHONY : src/outlier_filter.i
+
+# target to generate assembly for a file
+src/outlier_filter.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/outlier_filter.s
+.PHONY : src/outlier_filter.s
+
+# target to build an object file
+src/voxelgrid_filter.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/voxelgrid_filter.o
+.PHONY : src/voxelgrid_filter.o
+
+# target to preprocess a source file
+src/voxelgrid_filter.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/voxelgrid_filter.i
+.PHONY : src/voxelgrid_filter.i
+
+# target to generate assembly for a file
+src/voxelgrid_filter.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/voxelgrid_filter.s
+.PHONY : src/voxelgrid_filter.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -135,9 +210,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... registration"
+	@echo "... src/cloud_viewer.o"
+	@echo "... src/cloud_viewer.i"
+	@echo "... src/cloud_viewer.s"
+	@echo "... src/icp.o"
+	@echo "... src/icp.i"
+	@echo "... src/icp.s"
+	@echo "... src/io.o"
+	@echo "... src/io.i"
+	@echo "... src/io.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/outlier_filter.o"
+	@echo "... src/outlier_filter.i"
+	@echo "... src/outlier_filter.s"
+	@echo "... src/voxelgrid_filter.o"
+	@echo "... src/voxelgrid_filter.i"
+	@echo "... src/voxelgrid_filter.s"
 .PHONY : help
 
 

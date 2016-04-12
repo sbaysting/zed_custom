@@ -1,8 +1,19 @@
+// Standard
 #include <iostream>
 #include <sstream>
+#include <ctime>
+
+// PCL
 #include <pcl/io/io.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
+#include <pcl/visualization/cloud_viewer.h>
+#include <pcl/common/transforms.h>
+
+// Eigen
+#include <Eigen/Geometry>
+
+// Custom
 #include "voxelgrid_filter.hpp"
 #include "outlier_filter.hpp"
 #include "io.hpp"
@@ -11,10 +22,13 @@
 
 int main (int argc, char** argv){
 
+	// Start execution time
+
+	int start_s=clock();
+
 	// Parameters
 
 	std::string input_folder = "points/";
-	std::string output_folder = "downsampled_points/";
 
 	int clouds = 12;
 
@@ -25,11 +39,55 @@ int main (int argc, char** argv){
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr final_cloud (new pcl::PointCloud<pcl::PointXYZRGB>);
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp (new pcl::PointCloud<pcl::PointXYZRGB>);
 	std::ostringstream input_filename;
-	std::ostringstream output_filename;
+    Eigen::Matrix4f m;
+    m << 0.001, 0, 0, 0, 0, 0.001, 0, 0, 0, 0, 0.001, 0, 0, 0, 0, 1;
+
+	// Stitch the first two clouds
+
+	Eigen::Matrix4f global_transform;
+	Eigen::Matrix4f transform;
+
+	// Set filename
+	input_filename << input_folder << "1.pcd";
+
+	// Read the point clouds in PointCloud2 format
+	cloud_filtered = readPointCloud2(input_filename.str());
+	input_filename.str("");
+	input_filename.clear();
+	input_filename << input_folder << "2.pcd";
+	cloud = readPointCloud2(input_filename.str());
+
+	// Apply scaling to point clouds
+	std::cout << std::endl << "Scaling point clouds..." << std::endl;
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp_scale (new pcl::PointCloud<pcl::PointXYZRGB>);
+	temp_scale = convertToXYZRGB(cloud_filtered);
+	pcl::transformPointCloud(*temp_scale, *temp_scale, m);
+	cloud_filtered = convertToPointCloud2(approximate_voxelgrid_filter(temp_scale));
+	// Do cloud 2
+	temp_scale = convertToXYZRGB(cloud);
+	pcl::transformPointCloud(*temp_scale, *temp_scale, m);
+	cloud = convertToPointCloud2(approximate_voxelgrid_filter(temp_scale));
+
+	// Filter outliers
+	cloud_filtered = outlier_filter(cloud_filtered); //Cloud 1
+	cloud = outlier_filter(cloud); //Cloud 2
+
+	final_cloud = convertToXYZRGB(cloud_filtered); // Set cloud 1 as the base cloud
+	temp = convertToXYZRGB(cloud); // Set cloud 2 as the input cloud
+	global_transform = getICPTransformation(temp, final_cloud); // Run ICP on the base cloud (final_cloud) and the loaded cloud (temp), save the transformation produced
+	// Transform the cloud
+	pcl::transformPointCloud(*temp, *temp, global_transform);
+	// Merge the transformed point cloud with the base cloud
+	*final_cloud += *temp;
+
+	input_filename.str("");
+	input_filename.clear();
+
+	std::cout << std::endl;
 
 	// Loop over the clouds and filter them
 
-	for(int i = 1; i <= clouds; i++){
+	for(int i = 3; i <= clouds; i++){
 
 		// Set filename
 		input_filename << input_folder << i << ".pcd";
@@ -37,33 +95,40 @@ int main (int argc, char** argv){
 		// Read the point cloud in PointCloud2 format
 		cloud = readPointCloud2(input_filename.str());
 
-		// Filter using VoxelGrid
-		cloud_filtered = voxelgrid_filter(cloud);
+		// Apply scaling to point cloud
+		std::cout << std::endl << "Scaling point clouds..." << std::endl;
+		pcl::PointCloud<pcl::PointXYZRGB>::Ptr temp_scale (new pcl::PointCloud<pcl::PointXYZRGB>);
+		temp_scale = convertToXYZRGB(cloud);
+		pcl::transformPointCloud(*temp_scale, *temp_scale, m);
+
+		// Filter using ApproximateVoxelGrid
+		cloud_filtered = convertToPointCloud2(approximate_voxelgrid_filter(temp_scale));
 
 		// Filter outliers
 		cloud_filtered = outlier_filter(cloud_filtered);
 
-		// If its the first iteration, this is going to be the base cloud. Set it as such
-		if(i == 1){
-			final_cloud = convertToXYZRGB(cloud_filtered);
-		} else { // If not the first iteration, run ICP on the base cloud and the input cloud
-			temp = convertToXYZRGB(cloud_filtered);
-			final_cloud = stitchWithICP(temp, final_cloud);
-		}
-
-		/*// Write new PCD file
-		output_filename << output_folder << i << ".pcd";
-		writePointCloud2(output_filename.str(), cloud_filtered);
-		*/
+		// Run ICP
+		temp = convertToXYZRGB(cloud_filtered); // Load the filtered cloud as the input
+		transform = getICPTransformation(temp, final_cloud); // Run ICP on the base cloud (final_cloud) and the loaded cloud (temp), save the transformation produced
+		// Transform the cloud
+		pcl::transformPointCloud(*temp, *temp, transform);
+		// Merge the transformed point cloud with the base cloud
+		*final_cloud += *temp;
 
 		input_filename.str("");
 		input_filename.clear();
-		output_filename.str("");
-		output_filename.clear();
 
 		std::cout << std::endl;
 
 	} // End for loop
+
+	// Stop and print execution time
+
+	int stop_s=clock();
+	std::cout << "Execution time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC) << " seconds " << std::endl;
+
+	// Save resultant cloud
+	writePointCloud2("final_cloud.pcd", convertToPointCloud2(final_cloud));
 
 	displayPointCloud(final_cloud);
 
