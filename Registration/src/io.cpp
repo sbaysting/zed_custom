@@ -1,7 +1,16 @@
+// Standard
 #include <iostream>
+
+// Eigen
+#include <Eigen/Geometry>
+
+// PCL
 #include <pcl/io/io.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
+#include <pcl/common/transforms.h>
+
+// Custom
 #include "io.hpp"
 
 pcl::PointCloud<pcl::PointXYZRGB>::Ptr convertToXYZRGB(pcl::PCLPointCloud2::Ptr input){
@@ -49,5 +58,16 @@ bool writePointCloud2(std::string filename, pcl::PCLPointCloud2::Ptr cloud){
 	writer.write (filename, *cloud, Eigen::Vector4f::Zero (), Eigen::Quaternionf::Identity (), false);
 	
 	return true;
+
+}
+
+pcl::PointCloud<pcl::PointXYZRGB>::Ptr scaleCloud (pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud){
+
+	Eigen::Matrix4f m; // Transformation matrix to scale the point cloud coordinates to 1/1000 (convert to meters)
+    m << 0.001, 0, 0, 0, 0, 0.001, 0, 0, 0, 0, 0.001, 0, 0, 0, 0, 1;
+	std::cout << std::endl << "Scaling point clouds..." << std::endl;
+	pcl::transformPointCloud(*cloud, *cloud, m);
+	
+	return cloud;
 
 }

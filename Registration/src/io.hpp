@@ -11,4 +11,6 @@ pcl::PCLPointCloud2::Ptr readPointCloud2(std::string filename);
 
 bool writePointCloud2(std::string filename, pcl::PCLPointCloud2::Ptr cloud);
 
+pcl::PointCloud<pcl::PointXYZRGB>::Ptr scaleCloud (pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud);
+
 #endif

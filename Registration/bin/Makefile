@@ -127,19 +127,19 @@ src/cloud_viewer.s:
 .PHONY : src/cloud_viewer.s
 
 # target to build an object file
-src/icp.o:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/icp.o
-.PHONY : src/icp.o
+src/filters.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/filters.o
+.PHONY : src/filters.o
 
 # target to preprocess a source file
-src/icp.i:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/icp.i
-.PHONY : src/icp.i
+src/filters.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/filters.i
+.PHONY : src/filters.i
 
 # target to generate assembly for a file
-src/icp.s:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/icp.s
-.PHONY : src/icp.s
+src/filters.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/filters.s
+.PHONY : src/filters.s
 
 # target to build an object file
 src/io.o:
@@ -172,34 +172,19 @@ src/main.s:
 .PHONY : src/main.s
 
 # target to build an object file
-src/outlier_filter.o:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/outlier_filter.o
-.PHONY : src/outlier_filter.o
+src/stitching_algorithms.o:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/stitching_algorithms.o
+.PHONY : src/stitching_algorithms.o
 
 # target to preprocess a source file
-src/outlier_filter.i:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/outlier_filter.i
-.PHONY : src/outlier_filter.i
+src/stitching_algorithms.i:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/stitching_algorithms.i
+.PHONY : src/stitching_algorithms.i
 
 # target to generate assembly for a file
-src/outlier_filter.s:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/outlier_filter.s
-.PHONY : src/outlier_filter.s
-
-# target to build an object file
-src/voxelgrid_filter.o:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/voxelgrid_filter.o
-.PHONY : src/voxelgrid_filter.o
-
-# target to preprocess a source file
-src/voxelgrid_filter.i:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/voxelgrid_filter.i
-.PHONY : src/voxelgrid_filter.i
-
-# target to generate assembly for a file
-src/voxelgrid_filter.s:
-	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/voxelgrid_filter.s
-.PHONY : src/voxelgrid_filter.s
+src/stitching_algorithms.s:
+	$(MAKE) -f CMakeFiles/registration.dir/build.make CMakeFiles/registration.dir/src/stitching_algorithms.s
+.PHONY : src/stitching_algorithms.s
 
 # Help Target
 help:
@@ -213,21 +198,18 @@ help:
 	@echo "... src/cloud_viewer.o"
 	@echo "... src/cloud_viewer.i"
 	@echo "... src/cloud_viewer.s"
-	@echo "... src/icp.o"
-	@echo "... src/icp.i"
-	@echo "... src/icp.s"
+	@echo "... src/filters.o"
+	@echo "... src/filters.i"
+	@echo "... src/filters.s"
 	@echo "... src/io.o"
 	@echo "... src/io.i"
 	@echo "... src/io.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/outlier_filter.o"
-	@echo "... src/outlier_filter.i"
-	@echo "... src/outlier_filter.s"
-	@echo "... src/voxelgrid_filter.o"
-	@echo "... src/voxelgrid_filter.i"
-	@echo "... src/voxelgrid_filter.s"
+	@echo "... src/stitching_algorithms.o"
+	@echo "... src/stitching_algorithms.i"
+	@echo "... src/stitching_algorithms.s"
 .PHONY : help
 
 

@@ -16,7 +16,7 @@ SET(SRC_FOLDER src)
 FILE(GLOB_RECURSE SRC_FILES "${SRC_FOLDER}/*.cpp")
  
 #ADD_EXECUTABLE(${execName} ${SRC_FILES})
-ADD_EXECUTABLE(${execName} src/main.cpp src/voxelgrid_filter.cpp src/outlier_filter.cpp src/io.cpp src/icp.cpp src/cloud_viewer.cpp)
+ADD_EXECUTABLE(${execName} src/main.cpp src/filters.cpp src/io.cpp src/stitching_algorithms.cpp src/cloud_viewer.cpp)
 set_property(TARGET ${execName} PROPERTY OUTPUT_NAME "registration")
 
 TARGET_LINK_LIBRARIES(${execName}

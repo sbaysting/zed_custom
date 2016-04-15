@@ -1,11 +1,16 @@
+// Standard
 #include <iostream>
+
+// Eigen
 #include <Eigen/Geometry>
+
+// PCL
 #include <pcl/registration/icp.h>
-#include <pcl/io/io.h>
-#include <pcl/io/pcd_io.h>
-#include "icp.hpp"
 
+// Custom
+#include "stitching_algorithms.hpp"
 
+// Iterative Closest Point (ICP) 3D point cloud stitching algorithm, returns a transformed point cloud pointer
 pcl::PointCloud<pcl::PointXYZRGB>::Ptr stitchWithICP(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_to_rotate, pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_to_match){
 
 	pcl::IterativeClosestPoint<pcl::PointXYZRGB, pcl::PointXYZRGB> icp;
@@ -23,6 +28,7 @@ pcl::PointCloud<pcl::PointXYZRGB>::Ptr stitchWithICP(pcl::PointCloud<pcl::PointX
 
 }
 
+// Uses ICP to calculate a rigid transformation and returns the transformation matrix, no edits are made to the point cloud
 Eigen::Matrix4f getICPTransformation(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_to_rotate, pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud_to_match){
 
 	pcl::IterativeClosestPoint<pcl::PointXYZRGB, pcl::PointXYZRGB> icp;

@@ -5,11 +5,10 @@ SET(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/samuel/zed_custom/Registration/src/cloud_viewer.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/cloud_viewer.o"
-  "/home/samuel/zed_custom/Registration/src/icp.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/icp.o"
+  "/home/samuel/zed_custom/Registration/src/filters.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/filters.o"
   "/home/samuel/zed_custom/Registration/src/io.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/io.o"
   "/home/samuel/zed_custom/Registration/src/main.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/main.o"
-  "/home/samuel/zed_custom/Registration/src/outlier_filter.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/outlier_filter.o"
-  "/home/samuel/zed_custom/Registration/src/voxelgrid_filter.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/voxelgrid_filter.o"
+  "/home/samuel/zed_custom/Registration/src/stitching_algorithms.cpp" "/home/samuel/zed_custom/Registration/bin/CMakeFiles/registration.dir/src/stitching_algorithms.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
