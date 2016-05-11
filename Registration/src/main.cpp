@@ -23,8 +23,8 @@ int main (int argc, char** argv){
 
 	// *****************    Parameters    *****************
 
-	std::string input_folder = "points/"; // Folder where the point cloud files are stored (should be named with consecutive numbers only i.e. 1.pcd, 2.pcd, etc)
-	int clouds = 12; // Number of clouds in the input folder
+	std::string input_folder = "outside_vga/"; // Folder where the point cloud files are stored (should be named with consecutive numbers only i.e. 1.pcd, 2.pcd, etc)
+	int clouds = 8; // Number of clouds in the input folder
 
 	// Define point clouds
 
@@ -50,22 +50,22 @@ int main (int argc, char** argv){
 	input_filename.clear();
 
 	// Scale the clouds into meters, de-noise the clouds (outlier removal) and downsample for speed (voxelgrid)
-	currentCloud = scaleCloud(currentCloud);
-	previousCloud = scaleCloud(previousCloud);
-	currentCloudFiltered = outlier_filter(currentCloud);
-	currentCloudFiltered = voxelgrid_filter(currentCloudFiltered);
-	previousCloudFiltered = outlier_filter(previousCloud);
-	previousCloudFiltered = outlier_filter(previousCloudFiltered);
+	*currentCloud = scaleCloud(currentCloud);
+	*previousCloud = scaleCloud(previousCloud);
+	*currentCloudFiltered = outlier_filter(currentCloud);
+	*currentCloudFiltered = voxelgrid_filter(currentCloudFiltered);
+	*previousCloudFiltered = outlier_filter(previousCloud);
+	*previousCloudFiltered = voxelgrid_filter(previousCloudFiltered);
 
 	// Use ICP to estimate transformation on the filtered clouds, apply the transformation to the unfiltered current cloud, set the previous cloud as the base cloud, merge the clouds
-	global_transform = getICPTransformation(currentCloudFiltered, previousCloudFiltered);
+	global_transform = getICPTransformationWithPTPGuess(currentCloudFiltered, previousCloudFiltered);
 	pcl::transformPointCloud(*currentCloud, *currentCloud, global_transform);
 	*finalCloud = *previousCloud;
-	*finalCloud += *currentCloud;
+	*finalCloud = cloudMerge(currentCloud, finalCloud);
 
 	// *****************    Now we have a base cloud set up, stitch the rest of the clouds    *****************
 	// NOTE: This for loop will compare the current cloud and the previous cloud. This does NOT compare each cloud to the final cloud that we are building. That did not yield optimal results
-	for(int i = 3; i < clouds; i++){
+	for(int i = 3; i <= clouds; i++){
 		
 		// Build filename, save current cloud as previous cloud and load the next cloud
 		*previousCloudFiltered = *currentCloudFiltered;
@@ -75,23 +75,23 @@ int main (int argc, char** argv){
 		input_filename.clear();
 
 		// Scale the clouds into meters, de-noise the clouds (outlier removal) and downsample for speed (voxelgrid)
-		currentCloud = scaleCloud(currentCloud);
-		currentCloudFiltered = outlier_filter(currentCloud);
-		currentCloudFiltered = voxelgrid_filter(currentCloudFiltered);
+		*currentCloud = scaleCloud(currentCloud);
+		*currentCloudFiltered = outlier_filter(currentCloud);
+		*currentCloudFiltered = voxelgrid_filter(currentCloudFiltered);
 
 		// Use ICP to estimate transformation on the filtered clouds
-		transform = getICPTransformation(currentCloudFiltered, previousCloudFiltered);
+		transform = getICPTransformationWithPTPGuess(currentCloudFiltered, previousCloudFiltered);
 
 		// Transform unfiltered current point cloud using found transformation and the base coordinate system, then merge it to the final cloud
 		pcl::transformPointCloud(*currentCloud, *currentCloud, transform * global_transform);
-		*finalCloud += *currentCloud;
+		*finalCloud = cloudMerge(currentCloud, finalCloud);
 
 	}
 
 	// Stop and print execution time
 
 	int stop_s=clock();
-	std::cout << "Execution time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC) << " seconds " << std::endl;
+	std::cout << std::endl << "Execution time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC) << " seconds " << std::endl;
 
 	// *****************    Display the final stitched point cloud    *****************
 	displayPointCloud(finalCloud);

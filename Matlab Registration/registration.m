@@ -4,8 +4,8 @@ clc
 tic;
 
 % Number of clouds in folder
-clouds = 12;
-folder = 'VoxelGrid/downsampled_points/';
+clouds = 8;
+folder = 'outside_vga/';
 
 % Load PCD files and put them into XYZ format
 
@@ -35,10 +35,10 @@ pc2 = pcdenoise(pc2);
 % averaging their X,Y,Z coordinates
 
 gridSize = 0.5;
-fixed = pc1;
-moving = pc2;
-%fixed = pcdownsample(pc1, 'gridAverage', gridSize);
-%moving = pcdownsample(pc2, 'gridAverage', gridSize);
+%fixed = pc1;
+%moving = pc2;
+fixed = pcdownsample(pc1, 'gridAverage', gridSize);
+moving = pcdownsample(pc2, 'gridAverage', gridSize);
 
 % Use the ICP algorithm to estimate the 3-D rigid transformation on 
 % the downsampled data
@@ -69,8 +69,8 @@ for i = 3:clouds
 
     % Use previous moving point cloud as reference.
     fixed = moving;
-    %moving = pcdownsample(ptCloudCurrent, 'gridAverage', gridSize);
-    moving = ptCloudCurrent;
+    moving = pcdownsample(ptCloudCurrent, 'gridAverage', gridSize);
+    %moving = ptCloudCurrent;
 
     % Apply ICP registration.
     tform = pcregrigid(moving, fixed, 'Metric','pointToPlane','Extrapolate', true);

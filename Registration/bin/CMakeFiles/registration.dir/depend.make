@@ -654,6 +654,7 @@ CMakeFiles/registration.dir/src/filters.o: /usr/include/pcl-1.7/pcl/search/organ
 CMakeFiles/registration.dir/src/filters.o: /usr/include/pcl-1.7/pcl/search/pcl_search.h
 CMakeFiles/registration.dir/src/filters.o: /usr/include/pcl-1.7/pcl/search/search.h
 
+CMakeFiles/registration.dir/src/io.o: ../src/filters.hpp
 CMakeFiles/registration.dir/src/io.o: ../src/io.cpp
 CMakeFiles/registration.dir/src/io.o: ../src/io.hpp
 CMakeFiles/registration.dir/src/io.o: /usr/include/eigen3/Eigen/Cholesky
@@ -1147,6 +1148,7 @@ CMakeFiles/registration.dir/src/main.o: /usr/include/pcl-1.7/pcl/point_traits.h
 CMakeFiles/registration.dir/src/main.o: /usr/include/pcl-1.7/pcl/point_types.h
 CMakeFiles/registration.dir/src/main.o: /usr/include/pcl-1.7/pcl/register_point_struct.h
 
+CMakeFiles/registration.dir/src/stitching_algorithms.o: ../src/io.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: ../src/stitching_algorithms.cpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: ../src/stitching_algorithms.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/eigen3/Eigen/Cholesky
@@ -1380,23 +1382,32 @@ CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/PointIndices.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/cloud_iterator.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/centroid.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/common.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/concatenate.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/copy_point.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/eigen.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/accumulators.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/centroid.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/common.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/copy_point.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/eigen.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/io.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/projection_matrix.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/impl/transforms.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/io.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/point_operators.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/point_tests.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/projection_matrix.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/time.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/common/transforms.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/console/print.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/conversions.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/correspondence.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/exceptions.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/features/feature.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/features/impl/feature.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/features/impl/normal_3d.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/features/normal_3d.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/for_each_type.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/impl/cloud_iterator.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/impl/pcl_base.hpp
@@ -1405,6 +1416,15 @@ CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/kdtree/impl/kdtree_flann.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/kdtree/kdtree.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/kdtree/kdtree_flann.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/impl/octree_pointcloud.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/impl/octree_search.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_base.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_container.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_iterator.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_key.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_nodes.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_pointcloud.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/octree/octree_search.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/pcl_base.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/pcl_config.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/pcl_exports.h
@@ -1421,6 +1441,7 @@ CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/correspondence_sorting.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/correspondence_types.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/default_convergence_criteria.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/distances.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/eigen.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/icp.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/correspondence_estimation.hpp
@@ -1429,13 +1450,17 @@ CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/default_convergence_criteria.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/icp.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/registration.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/transformation_estimation_lm.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/transformation_estimation_point_to_plane_lls.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/impl/transformation_estimation_svd.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/registration.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/transformation_estimation.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/transformation_estimation_lm.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/transformation_estimation_point_to_plane.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/transformation_estimation_point_to_plane_lls.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/transformation_estimation_svd.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/warp_point_rigid.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/registration/warp_point_rigid_6d.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/sample_consensus/boost.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/sample_consensus/eigen.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/sample_consensus/impl/ransac.hpp
@@ -1446,7 +1471,11 @@ CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/sample_consensus/sac_model.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/sample_consensus/sac_model_registration.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/impl/kdtree.hpp
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/impl/organized.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/impl/search.hpp
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/kdtree.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/octree.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/organized.h
+CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/pcl_search.h
 CMakeFiles/registration.dir/src/stitching_algorithms.o: /usr/include/pcl-1.7/pcl/search/search.h
 
