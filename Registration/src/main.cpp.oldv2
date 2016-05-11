@@ -1,0 +1,100 @@
+// Standard
+#include <iostream>
+#include <sstream>
+#include <ctime>
+
+// PCL
+#include <pcl/common/transforms.h>
+
+// Eigen
+#include <Eigen/Geometry>
+
+// Custom
+#include "filters.hpp"
+#include "io.hpp"
+#include "stitching_algorithms.hpp"
+#include "cloud_viewer.hpp"
+
+int main (int argc, char** argv){
+
+	// Start execution time
+
+	int start_s=clock();
+
+	// *****************    Parameters    *****************
+
+	std::string input_folder = "room_clouds_vga/"; // Folder where the point cloud files are stored (should be named with consecutive numbers only i.e. 1.pcd, 2.pcd, etc)
+	int clouds = 8; // Number of clouds in the input folder
+
+	// Define point clouds
+
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr currentCloud (new pcl::PointCloud<pcl::PointXYZRGB>); // Current loaded cloud
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr previousCloud (new pcl::PointCloud<pcl::PointXYZRGB>); // Previous loaded cloud
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr currentCloudFiltered (new pcl::PointCloud<pcl::PointXYZRGB>); // Current loaded cloud with filters applied
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr previousCloudFiltered (new pcl::PointCloud<pcl::PointXYZRGB>); // Previous loaded cloud with filters applied
+	pcl::PointCloud<pcl::PointXYZRGB>::Ptr finalCloud (new pcl::PointCloud<pcl::PointXYZRGB>);
+	std::ostringstream input_filename;
+	Eigen::Matrix4f global_transform; // The first cloud will become the base coordinate system. All other cloud stitches will have to adjust for this coordinate system
+	Eigen::Matrix4f transform; // The ICP rigid transform of the current two clouds
+
+	// *****************    Stitch the first two clouds    *****************
+
+	// Build filename and load the first two clouds in XYZRGB format
+	input_filename << input_folder << "1.pcd";
+	previousCloud = readXYZRGB(input_filename.str()); // Cloud 1
+	input_filename.str("");
+	input_filename.clear();
+	input_filename << input_folder << "2.pcd";
+	currentCloud = readXYZRGB(input_filename.str()); // Cloud 2
+	input_filename.str("");
+	input_filename.clear();
+
+	// Scale the clouds into meters, de-noise the clouds (outlier removal) and downsample for speed (voxelgrid)
+	*currentCloud = scaleCloud(currentCloud);
+	*previousCloud = scaleCloud(previousCloud);
+	*currentCloudFiltered = outlier_filter(currentCloud);
+	*currentCloudFiltered = voxelgrid_filter(currentCloudFiltered);
+	*previousCloudFiltered = outlier_filter(previousCloud);
+	*previousCloudFiltered = voxelgrid_filter(previousCloudFiltered);
+
+	// Use ICP to estimate transformation on the filtered clouds, apply the transformation to the unfiltered current cloud, set the previous cloud as the base cloud, merge the clouds
+	global_transform = getICPTransformationWithPTPGuess(currentCloudFiltered, previousCloudFiltered);
+	pcl::transformPointCloud(*currentCloud, *currentCloud, global_transform);
+	*finalCloud = *previousCloud;
+	*finalCloud = cloudMerge(currentCloud, finalCloud);
+
+	// *****************    Now we have a base cloud set up, stitch the rest of the clouds    *****************
+	// NOTE: This for loop will compare the current cloud and the previous cloud. This does NOT compare each cloud to the final cloud that we are building. That did not yield optimal results
+	for(int i = 3; i <= clouds; i++){
+		
+		// Build filename, save current cloud as previous cloud and load the next cloud
+		*previousCloudFiltered = *currentCloudFiltered;
+		input_filename << input_folder << i << ".pcd";
+		currentCloud = readXYZRGB(input_filename.str());
+		input_filename.str("");
+		input_filename.clear();
+
+		// Scale the clouds into meters, de-noise the clouds (outlier removal) and downsample for speed (voxelgrid)
+		*currentCloud = scaleCloud(currentCloud);
+		*currentCloudFiltered = outlier_filter(currentCloud);
+		*currentCloudFiltered = voxelgrid_filter(currentCloudFiltered);
+
+		// Use ICP to estimate transformation on the filtered clouds
+		transform = getICPTransformationWithPTPGuess(currentCloudFiltered, previousCloudFiltered);
+
+		// Transform unfiltered current point cloud using found transformation and the base coordinate system, then merge it to the final cloud
+		pcl::transformPointCloud(*currentCloud, *currentCloud, transform * global_transform);
+		*finalCloud = cloudMerge(currentCloud, finalCloud);
+
+	}
+
+	// Stop and print execution time
+
+	int stop_s=clock();
+	std::cout << std::endl << "Execution time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC) << " seconds " << std::endl;
+
+	// *****************    Display the final stitched point cloud    *****************
+	displayPointCloud(finalCloud);
+
+	return (0);
+}

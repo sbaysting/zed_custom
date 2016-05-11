@@ -4,8 +4,8 @@ clc
 tic;
 
 % Number of clouds in folder
-clouds = 8;
-folder = 'outside_vga/';
+clouds = 2;
+folder = 'underwater_vga/';
 
 % Load PCD files and put them into XYZ format
 
